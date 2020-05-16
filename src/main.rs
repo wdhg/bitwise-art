@@ -12,15 +12,15 @@ fn rnd(func: fn(i64, i64) -> i64, x: i64, y: i64) -> u8 {
 }
 
 fn main() {
-    // change this line to play around with patterns
+    // change these lines to play around with patterns
     let func = |x: i64, y: i64| -> i64 { x ^ y };
-    // mirror it on all axis to give the illusion of the pattern being centered
-    let size: u32 = 256;
+    let zoom: u32 = 2;
+    let size: u32 = 512;
     ImageBuffer::from_fn(size, size, |x, y| {
         image::Luma([rnd(
             func,
-            ((x as i64) - (size as i64 / 2)).abs(),
-            ((y as i64) - (size as i64 / 2)).abs(),
+            (((x / zoom) as i64) - (size as i64 / 2)).abs(),
+            (((y / zoom) as i64) - (size as i64 / 2)).abs(),
         )])
     })
     .save("out.png")
